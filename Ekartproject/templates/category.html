@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+   {% if category %}
+      {{category.description|truncatewords:200 }}
+   {% else %}
+       Welcome To KRISHNA BAKERY where you can buys different items.....
+   {% endif %}
+{% endblock %}
+{% block title %}
+   {% if category %}
+      {{category.name}} - KRISHNA BAKERY
+   {% else %}
+      TASTE OUR NEW ITEMS - KRISHNA BAKERY
+   {% endif %}
+{% endblock %}
+
+
+{% block content %}
+    {% if category %}
+
+           <div>
+            <div class="row my_row_class">
+                <div class="mx-auto">
+                <p><a href="{% url 'Ekartapp:allProdCat' %}">Taste Of Loves</a></p>
+            </div>
+                </div>
+        </div>
+    {% endif %}
+       <div class="ma_auto">
+    {% if category %}
+            <img class="my_image" style="width:100%; height:600px;" src="{{category.image.url}}" alt="{{category.name}}">
+       </div>
+       <br>
+         <div>
+             <h1 class="cat" style="font-size:30px; text-transform: uppercase; font-family:Times New Roman, Times, serif; text-align:center;">{{category.name}}</h1>
+             <p class="text-justify" style="font-family:Lucida Sans; font-size:15px">{{category.description}}</p>
+
+</div>
+    {% else %}
+<div>
+<img class="my_image my_image_padding" src="{%  static 'img/card.png' %}" alt="Our Products" width="100%" height="600px">
+</div>
+<br>
+<div>
+    <h1 class="text-center my_title" style="font-size:30px; text-transform: uppercase; font-family:Times New Roman, Times, serif;">Taste Of Loves</h1>
+    <p class="text-justify" style="font-family:Lucida Sans; font-size:20px">Restaurant menu descriptions play an essential role in the restaurant menu design. In most restaurants, descriptions are a list of all the ingredients that are used to prepare the dish. A stellar restaurant menu descriptions can be so much more than that!!!! </p>
+</div>
+  {% endif %}
+
+<div class="container margin-bottom:10px">
+    <div class="row mx_auto">
+        {% for product in products.object_list %}
+        <div class="my_bottom_margin col-9 col-sm-12 col-md-6 col-lg-6">
+            <div class="card text-center" style="min-width:18rem,">
+                <a href="{{product.get_url}}"><img class="my_image" style="width:50%; height:300px;" src="{{product.image.url}}" alt="{{product.name}}"></a>
+                <div class="card-body" style="padding-top:10px">
+                    <h4 class="head" style="font-size:20px; text-transform: uppercase; letter-spacing:.2em; font-family:Times New Roman, Times, serif;">{{product.name}}</h4>
+                    <p class="price" style="font-size:18px; font-weight:bold">${{product.price}}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+    <div class="mx-auto">
+        {% if products.paginator.num_pages > 1 %}
+         {% csrf_token %}
+        <hr>
+        <div class="text-center">
+            {% for pg in products.paginator.page_range %}
+                <a href="?page={{pg}}" class="btn btn-light btn-sm {% if product.number == pg %} active {% endif %}">{{pg}}</a>
+                   {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <br>
+</div>
+{% endblock %}

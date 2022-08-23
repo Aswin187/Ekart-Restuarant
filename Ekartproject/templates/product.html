@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+
+      {{product.description|truncatewords:200 }}
+
+
+{% endblock %}
+{% block title %}
+   {% if category %}
+      {{product.name}} - Taste Product
+   {
+   {% endif %}
+{% endblock %}
+{% block content %}
+
+<div>
+    <div>
+        <p><a href="{% url 'Ekartapp:allProdCat' %}">Home</a> | <a href="{{product.category.get_url}}">{{product.category}}</a>|{{product.name}}</p>
+    </div>
+</div>
+<br>
+<div>
+    <div class="container">
+        <div class="text-center">
+            <img class="my_image" style="width:30%; height:300px;" src="{{product.image.url}}" alt="{{product.name}}">
+        </div>
+    </div>
+     <div>
+        <div>
+            <h1 class="prod " style="font-size:30px; text-transform : uppercase; font-family:Times New Roman, Times, serif;">{{product.name}}</h1>
+            <p class="price" style="font-size:18px; font-weight:bold">${{product.price}}</p>
+            <p class="title" style="font-size:20px; text-transform : uppercase; font-family:Times New Roman, Times, serif;">Product Description</p>
+            <p class="para" style="font-family:italic small-caps bold 12px/30px Georgia, serif; font-size:15px">{{product.description}}</p>
+            {% if product.stock <= 0 %}
+            <p><b><i>OUT OF STOCK</i></b></p>
+            {% else %}
+            <a class="btn btn-secondary" href="{% url 'cart:add_cart' product.id %}">ADD CART</a>
+            <a class="btn btn-warning" href="{% url 'cart:add_cart' product.id %}">BUY NOW</a>
+            {% endif %}
+            {% endblock %}
+
+        </div>
+    </div>
+</div>
