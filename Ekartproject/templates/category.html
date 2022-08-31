@@ -51,7 +51,7 @@
 <div class="container margin-bottom:10px">
     <div class="row mx_auto">
         {% for product in products.object_list %}
-        <div class="my_bottom_margin col-9 col-sm-12 col-md-6 col-lg-6">
+        <div class="my_bottom_margin col-9 col-sm-12 col-md-6 col-lg-6" style="margin-bottom:25px;">
             <div class="card text-center" style="min-width:18rem,">
                 <a href="{{product.get_url}}"><img class="my_image" style="width:50%; height:300px;" src="{{product.image.url}}" alt="{{product.name}}"></a>
                 <div class="card-body" style="padding-top:10px">
